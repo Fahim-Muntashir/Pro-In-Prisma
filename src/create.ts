@@ -1,47 +1,58 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, UserRole } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 const main = async () => {
-    
+    // const createUser = await prisma.user.create({
+    //     data: {
+    //         username: 'user2',
+    //         email: 'user2@example.com',
+    //         role: UserRole.user
+    //     }
+    // })
 
-    // Create Data into db single
-//     const result = await prisma.post.create({
-//         data: {
-//             title:"tit2ke",
-//             content: "content",
-//             authorName: "asdf",
-//         }
-// })
 
-//     console.log(result);
-    
-    // create many
-    const createMany = await prisma.post.createMany({
-        data: [
-            {
-                title:"The title nmpw",
-                content: "aaaaa",
-                authorName: "asdasdfasdff",
-            },
-            {
-                title:"The title nmpw3",
-                content: "aaaaad3",
-                authorName: "asdasdfasdff4",
-            },
-            {
-                title:"The title nmpw4",
-                content: "aaaaad",
-                authorName: "asdasdfasdff5d",
-            },
-            {
-                title:"The title nmpw6",
-                content: "aaaaa5",
-                authorName: "asdasdfasdff",
-            },
-        ]
+    // const createProfile = await prisma.profile.create({
+    //     data: {
+    //         bio: "tjhs is bio",
+    //         userId:1,
+    //     }
+    // })
+
+
+    // const createCategory = await prisma.category.create({
+    //     data: {
+    //         name:""
+    //     }
+    // })
+
+
+    const createPost = await prisma.post.create({
+        data: {
+            title: "This is Title 5",
+            content: "this is content of the post",
+            authorId: 1,
+            postCategory: {
+                create: [
+                    {
+                        categoryId: 1,
+                    },
+                    {
+                        categoryId: 2,
+                    },
+                    {
+                        categoryId: 3,
+                    },
+                ]
+            }
+        },
+            include: {
+                postCategory:true
+            }
+
     })
-    console.log(createMany);
+
+    console.log(createPost);
     
 }
 main();
